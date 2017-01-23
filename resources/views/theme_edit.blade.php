@@ -24,7 +24,7 @@
             <div class="form-group">
                 <label class="control-label" for="html">HTML Code</label>
 
-                <textarea id="my-editor" name="html" class="form-control">{!! $theme->html !!}</textarea>
+                <textarea rows="20" name="html" class="form-control">{!! $theme->html !!}</textarea>
             </div>
 
             <div class="form-group">
@@ -50,14 +50,4 @@
         {{ $themes->links() }}
     </div>
 </div>            
-@endsection
-
-@section('footer')
-    <script src="/vendor/unisharp/laravel-ckeditor/ckeditor.js"></script>
-    <script>
-        CKEDITOR.replace( 'my-editor', {
-            fullPage: true,
-            allowedContent: true,
-        });
-    </script>
 @endsection

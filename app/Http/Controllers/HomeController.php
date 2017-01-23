@@ -173,7 +173,8 @@ class HomeController extends Controller
     
         $code = strtoupper($page->slug);
 
-        $keywords = explode(',', $page->link->keywords);
+        $keywords = explode(PHP_EOL, $page->link->keywords);
+
 
         $keyword = str_replace("%keyword%", str_replace(" ", "+", $keywords[$page->link->counter]), $page->link->link);
 
@@ -187,7 +188,11 @@ class HomeController extends Controller
 
         $page->link->save();
 
+        // $html = $page->theme->html;
+
         // $code and $link passed to html
+
+        // return view('show', compact('html', 'link', 'code'));
 
         return eval("?>" . $page->theme->html . "<?");
     }
