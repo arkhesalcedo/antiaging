@@ -41,5 +41,26 @@ Route::get('links/{link}/edit', 'HomeController@editlinks');
 
 Route::put('links/{link}/edit', 'HomeController@updatelinks');
 
-Route::get('{slug}', 'HomeController@slug');
+Route::get('{slug}', function($slug){
+	$page = App\Page::whereSlug(strtolower($slug))->firstorFail();
+    
+    $code = strtoupper($page->slug);
+
+    $keywords = explode(PHP_EOL, $page->link->keywords);
+
+
+    $keyword = str_replace("%keyword%", str_replace(" ", "+", $keywords[$page->link->counter]), $page->link->link);
+
+    $link = str_replace("%slug%", strtoupper($page->slug), $keyword);
+
+    if ($page->link->counter < count($keywords) - 1) {
+        $page->link->counter++;
+    } else {
+        $page->link->counter = 0;
+    }
+
+    $page->link->save();
+
+    return eval("?>" . $page->theme->html . "<?");
+});
 
